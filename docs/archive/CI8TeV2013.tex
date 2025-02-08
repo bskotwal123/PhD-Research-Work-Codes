@@ -1,0 +1,343 @@
+\documentclass[aps,prd,preprint,nofootinbib]{revtex4}
+\usepackage{graphicx,amssymb,amsmath}
+\begin{document}
+
+\title{Contact Interaction Search with Inclusive Jets}
+
+\author{Suman Beri$^1$ and Harrison B. Prosper$^2$}
+
+\affiliation{
+$^1$Department of Physics, Panjab University, India\\
+$^2$Department of Physics, Florida State University, USA
+}
+
+
+\centerline{\large{CMS Collaboration}}
+
+\date{\today}
+
+\maketitle
+
+
+\section{Installation}
+This work requires three packages, {\tt lhapdf-5.9.1}, {\tt fastnlo\_toolkit-2.3.1pre-1871}, and
+{\tt CIJET1.1}. The {\tt fastNLO} program, which uses {LHAPDF}, will be used to calculate the binned inclusive jet 
+$p_T$ spectrum, while {\tt CIJET} will be used to calculate, at next-to-leading order (NLO) accuracy,  the spectra arising from contact
+interactions.
+
+\subsection{Installation Instructions}
+\begin{enumerate}
+\item
+First create in your home directory an area into which the codes will be installed:
+	\begin{verbatim}
+	cd
+	mkdir external
+	cd external
+	mkdir bin
+	mkdir lib
+	mkdir -p share/lhapdf/PDFsets
+	\end{verbatim}
+
+\item Unpack and compile {\tt lhapdf-5.9.1}
+	\begin{verbatim}
+	tar zxvf lhapdf-5.9.1.tar.gz
+	cd lhadpf-5.9.1
+	./configure --prefix=$HOME/external
+	make
+	make install
+	\end{verbatim}
+
+
+\item Unpack and compile {\tt fastnlo\_toolkit-2.3.1pre-1871}
+	\begin{verbatim}
+	tar zxvf fastnlo_toolkit-2.3.1pre-1871.tar.gz
+	cd fastnlo_toolkit-2.3.1pre-1871
+	./configure --prefix=$HOME/external
+	make
+	make install
+	\end{verbatim}
+
+\item Unpack and compile {\tt CIJET-1.1}
+	\begin{verbatim}
+	tar zxvf CIJET-1.1.tar.gz
+	cd CIJET1.1
+	make
+	\end{verbatim}
+	
+	You could work in the {\tt CIJET1.1} area, but it may be better to copy the relevant files to a separate working area. Suppose this working area is called
+\end{enumerate}
+
+
+
+
+
+\section{Analysis details for 8 TeV CMS data}
+We shall use the measured inclusive jet $p_\text{T}$ spectrum at 8 TeV with the following
+characteristics: 
+
+\begin{itemize}
+\item Jets defined by anti-$k_\text{T}$ algorithm with distance parameter $D = 0.7$.
+\item Jet $|y| < 0.5$
+\item Jet $p_\text{T}$ binning, range $507 \leq p_\text{T} \leq 2500$ GeV
+%
+%\begin{table}[htp]
+% \begin{tabular}{|rrrrrrrrrrr|}
+% \hline
+%507 & 548& 592& 638& 686& 737& 790& 846& 905& 967 & 1032\\ \hline 
+%1101& 1172& 1248& 1327& 1410& 1497& 1588& 1784& 2116 & 2500 & \\ \hline 
+% \end{tabular}
+%\end{table}
+\end{itemize}
+\noindent
+For the models, we shall use the following:
+\begin{itemize}
+\item Renormalization ($\mu_r$) and factorization ($\mu_f$) scales with nominal value $\mu = $ jet $p_\text{T}$ and each scale changed independently by the factors $1/2$, 1, and 2.
+
+\item PDFs: CT10nlo, NNPDF21, and MSTW2008nlo68cl. 
+\end{itemize}
+
+Spectra will be computed for random samplings of PDFs from each PDF group, at least 100 PDF sets per group.  Ensembles already exist for NNPDF, but for CTEQ and MSTW we shall generate our own samples using the procedure described in JHEP 08 (2012) 052 [arXiv:1205.4024 [hep-ph]] and http://mstwpdf.hepforge.org/random.
+
+Let $\Delta F$ represent a random change in the predicted cross section for a given jet $p_T$ bin due to a random sampling from the space of PDFs. This change can be approximated by 
+\begin{equation}
+	\Delta F = \frac{1}{2f} \sum_{j=1}^n |F^{+}_j - F^{-}_j| \, R_j,
+\end{equation} 
+where the $R_j$ are random numbers sampled from $n$ independent Gaussians of zero mean
+and unit variance, $F^\pm_j$ are the $\pm$ shifts in predicted cross sections due to the
+$\pm$ shifts in the $n$ PDF parameters, and $f = 1 \text{ or } 1.64$ depending on whether the $\pm$ shifts are 68\% or 90\% C.L. shifts. We have assumed that $|F^+ - F^-|/(2z)$ approximates one standard deviation and the shifts are approximately Gaussian. CTEQ provides 90\% shifts, while MSTW provides both 68\% and 90\% shifts. For CT10 $n = 26$ and for MSTW2008 $n = 20$. 
+
+Shifts in the PDF parameters will induce correlations across all jet $p_T$ bins and across all models. In order
+to account for these correlations correctly, for a given PDF set we need to use the same set of random numbers $R_j$ for all bins and all models. For each PDF set it would probably be safer to generate these 100 sets of $n$ numbers $R_j$ and store them in a file for later use.
+
+
+\bigskip
+
+\section{Observations}
+The high-$p_T$ end of the observed inclusive jet spectrum (CMS PAS SMP-12-012, CMS Analysis Note AN2012\_223\_V16, 2013 and its updates) with 19.34fb$^{-1}$ of data is shown in Table~\ref{tab:yield}.
+%\begin{table}[htp]
+%\caption{Jet yield for each $p_T$ bin and $|y| < 0.5$.}
+%\label{tab:yield}
+%\medskip
+% \begin{tabular}{|r||r|c|r|r|c|}
+% \hline
+% bin	&	$p_T$ range	& jet yield &  bin	&	$p_T$ range	& jet yield \\ \hline
+% \hline
+%1	& 507-548 	& 415878	& 11	& 1032-1101 	& 4332\\ \hline
+%2	& 548-592  	& 268878	& 12	& 1101-1172 	& 2593\\ \hline 
+%3	& 592-638 	& 169226	& 13	& 1172-1248 	& 1656\\ \hline
+%4	& 638-686	& 106712	& 14	& 1248-1327 	& 933\\ \hline
+%5	& 686-737	& 68958	& 15	& 1327-1410	& 630\\ \hline 
+%6	& 737-790	& 43139	& 16	& 1410-1497 	& 354\\ \hline 
+%7	& 790-846	& 27733	& 17	& 1497-1588 	&199\\ \hline
+%8	& 846-905 	& 17902	& 18	& 1588-1784 	&175\\ \hline
+%9	& 905-967 	& 11113	& 19	& 1784-2116 	&47\\ \hline
+%10	& 967-1032 	& 6966 	& 20	& 2116-2500	&1\\ \hline
+%\end{tabular}
+%\end{table}
+%
+
+%Bin = 18; Yield = 701198
+%Bin = 19; Yield = 452728
+%Bin = 20; Yield = 284560
+%Bin = 21; Yield = 178899
+%Bin = 22; Yield = 115347
+%Bin = 23; Yield = 72274
+%Bin = 24; Yield = 46057
+%Bin = 25; Yield = 29217
+%Bin = 26; Yield = 18615
+%Bin = 27; Yield = 11602
+%Bin = 28; Yield = 7112
+%Bin = 29; Yield = 4348
+%Bin = 30; Yield = 2706
+%Bin = 31; Yield = 1581
+%Bin = 32; Yield = 1025
+%Bin = 33; Yield = 529
+%Bin = 34; Yield = 335
+%Bin = 35; Yield = 282
+%Bin = 36; Yield = 88
+%Bin = 37; Yield = 6
+
+\begin{table}[htp]
+\caption{Jet yield for each $p_T$ bin and $|y| < 0.5$.}
+\label{tab:yield}
+\medskip
+ \begin{tabular}{|r||r|c|r|r|c|}
+ \hline
+ bin	&	$p_T$ range	& jet yield &  bin	&	$p_T$ range	& jet yield \\ \hline
+ \hline
+1	& 507-548 	& 701198	& 11	& 1032-1101 	& 7112\\ \hline
+2	& 548-592  	& 452728	& 12	& 1101-1172 	& 4348\\ \hline 
+3	& 592-638 	& 284560	& 13	& 1172-1248 	& 2706\\ \hline
+4	& 638-686	& 178899	& 14	& 1248-1327 	& 1581\\ \hline
+5	& 686-737	& 115347	& 15	& 1327-1410	& 1025\\ \hline 
+6	& 737-790	& 72274	& 16	& 1410-1497 	& 529\\ \hline 
+7	& 790-846	& 46057	& 17	& 1497-1588 	& 335\\ \hline
+8	& 846-905 	& 29217	& 18	& 1588-1784 	& 282\\ \hline
+9	& 905-967 	& 18615	& 19	& 1784-2116 	& 88\\ \hline
+10	& 967-1032 	& 11602 	& 20	& 2116-2500	&6\\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Models}
+
+For the 8 TeV data set, we shall consider the contact interaction (CI) model defined by the effective
+Lagrangian~\cite{bib:Gao},
+\begin{equation}
+	L = 2 \pi \lambda \, \sum_{i=1}^6 \eta_i \, O_i,
+\end{equation}
+where $\Lambda = 1/\sqrt{\lambda}$ is the CI mass scale, $\eta_i$~\footnote{We use $\eta_i$ instead of $\lambda_i$, which is the notation used in Ref.~\cite{bib:Gao}, in order to avoid possible confusion with the parameter $\lambda$.} are constants and $O_i$ are dimension 6 operators. 
+This model is defined by seven parameters: $\Lambda$, $\eta_1,\cdots, \eta_6$. In practice,  we shall follow the CMS paper arXiv:1202.5535v1 [hep-ex] and consider specific combinations
+of values for the $\eta_i$. 
+Writing, $\eta_{LL} = \eta_1$, $\eta_{RL} = \eta_3 / 2$, and $\eta_{RR} = \eta_5$, we shall
+consider the models in Table~\ref{tab:models}.
+\begin{table}[htp]
+\caption{Models to be considered in this analysis}
+\label{tab:models}
+\medskip
+ \begin{tabular}{l|lll}
+ \hline
+ Model	&	$\eta_{LL}\quad$	&  $\eta_{RL}\quad$	& $\eta_{RR}\quad$ \\ \hline \hline
+ LL		& 	$\pm 1$	 	& 0			& 0 \\
+ RR		& 	0	 		& 0			& $\pm 1$ \\
+ VV		& 	$\pm 1$	 	& $\pm 1$		& $\pm 1$ \\
+ AA		& 	$\pm 1$	 	& $\mp 1$		& $\pm 1$ \\
+ V-A		& 	0	 		& $\pm 1$			& 0 \
+\end{tabular}
+\end{table}
+At next-to-leading order (NLO),  the inclusive jet cross section for jet $p_\text{T}$ bin $j$ can be written as~\cite{bib:CIJET},
+\begin{eqnarray}
+	\sigma_j 	& = & \sigma_\text{QCD} + (b - b^\prime \, \ln\lambda)  \, \lambda +  	
+	 (a - a^\prime \, \ln\lambda)  \, \lambda^2	, 	
+	 \label{eq:sigma}
+\end{eqnarray}
+where $\sigma_\text{QCD}$ is the QCD cross section computed at NLO using
+the {\tt fastNLO} program. 
+We can use Gao's program, {\tt CIJET}, to calculate the coefficients $b, b^\prime, a, \text{ and } a^\prime$ for each of the models listed in Table~\ref{tab:models}. This will allow us to
+construct a family of 1-parameter models with which to analyze the 8 TeV data.
+
+
+We shall not unfold the spectrum; instead we shall convolve the predicted spectra using
+the jet response function 
+\begin{equation}
+R(p_T| z, x, y) = \text{Gaussian}(p_T, x z, y \sigma_z),
+\label{eq:R}
+\end{equation}
+which is assumed to be a Gaussian with mean $z$ --- the true jet $p_T$ --- and standard deviation 
+ given by 
+\begin{equation}
+	\sigma_z = z C_{Data} \sqrt{\frac{N^2}{z^2} + \frac{S^2}{z} + C^2}, 
+	\label{eq:JER}
+\end{equation}
+where $C_{Data} = 1.12$, $N = 6.130$ GeV, $S = 0.949$ GeV$^{1/2}$, and
+$C = 0.031$. In the simplest case, the scale factors $x$ and $y$ are used to model 
+the uncertainty in
+jet energy scale (JES) and the jet energy resolution (JER) $\sigma_z$. These constants
+(derived from simulated jets) are for the rapidity bin $|y| < 0.5$.  As is clear from Table~6 in
+AN2012\_223\_V16, 2013, the jet  resolution depends slightly on rapidity\footnote{There is a typo in Table~6; the numbers for $N$ and $C$ are switched.}.
+In
+the simplest case, $x$ and $y$ are Gaussian variates with unit mean and standard
+deviations of $0.04$ and $0.10$, respectively, representing the overall 4\% uncertainty in the
+jet energy scale at high $p_T$ and 10\% uncertainty in the jet energy resolution.
+For a more accurate modeling of the JES, we shall use the fact that (currently) $x$ is
+a linear sum of 33 independent jet $(p_T, y)$-dependent Gaussian components, each with
+its own standard deviation. The details of the calculations may be found at
+
+{\tt https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECUncertaintySources}
+ 
+In practice we shall convolve $d\sigma_\text{QCD}/dp_T$ and the differential
+distribution of the coefficients  in Eq.~(\ref{eq:sigma})  with the jet energy response function, Eqs.~(\ref{eq:R}) and (\ref{eq:JER}), using
+\begin{equation}
+	c_j^\text{obs}(x, y) = \int_\text{$p_T$ bin $j$} dp_T \int_0^\infty dz \,  R(p_T | z, x, y) \, f(z),
+	\label{eq:cj}
+\end{equation}
+where $f(z)$ represents a smooth interpolation of either $d\sigma_\text{QCD}/dp_T$ or each of the differential distributions of the coefficients. We shall generate random samples of $x, y$
+pairs and calculate the smeared binned spectra using Eq.~(\ref{eq:cj}), using the same
+$x, y$ pair for QCD and the CI models and for all PDF sets in order to maintain the correct
+correlation across all models induced by the JES and JER uncertainties. Another $x, y$ pair
+will be sampled and another set of smeared spectra will be calculated. This procedure
+will be repeated 100 times for each PDF
+set. The results from the three PDF sets will be pooled into a single 300 member ensemble of
+smeared spectra. 
+
+Note that each PDF set will be sampled independently, but for a
+given PDF set we shall use the same set of sampled PDFs for the QCD and CI models.
+
+%It would be useful to find out if it is possible to integrate 
+%\begin{eqnarray}
+%\text{Gaussian}(p_T, x z, y \sigma_z) \, \text{Gaussian}(x, 1, \sigma_x) \, \text{Gaussian}(y, 1, \sigma_y), \\ \sigma_x = 0.04, \quad\sigma_y = 0.10, \nonumber
+%\end{eqnarray}
+%exactly with respect to $x$ and $y$. If we can, it will save quite a bit of time.
+%
+\subsection{Likelihood}
+
+We shall follow the 7 TeV analysis and use the  multinomial likelihood function
+\begin{equation}
+p(D|\lambda, \omega) = \binom{N}{N_1,\cdots,N_K} \prod_{i=1}^K \left(\frac{\sigma_i}{\sigma}\right)^{N_i},
+\label{eq:like}
+\end{equation}
+where $\sigma \equiv \sum_{i=1}^K \sigma_i$,
+$N \equiv \sum_{i=1}^K N_i$ is the total observed count, $N_i$ the count in jet $p_\text{T}$ bin $i$, and $\omega$ denotes the nuisance
+parameters, $\omega = \sigma_\text{QCD}, b, b^\prime, a, a^\prime$.
+
+%
+%\subsection{Prior}
+%At leading order, and in the absence of systematic uncertainties, the reference prior $\pi(\lambda)$ for $\lambda$ can be calculated exactly. We find 
+%\begin{equation}
+% \pi(\lambda|\omega) = \sqrt{
+% \left[\sum_{i=1}^K \frac{\sigma_i}{\sigma} \left( \frac{B_i + 2 A_i \lambda}{\sigma_i}\right)^2 \right]
+% - \left( \frac{B + 2 A \lambda}{\sigma}\right)^2},
+% \label{eq:refp}
+%\end{equation}
+%where $A = \sum_{i=1}^K A_i$ and $B = \sum_{i=1}^K B_i$.
+%The function $\pi(\lambda|\omega)$ for the nominal values of
+%the nuisance parameters represented by $\omega$ is shown in Fig.~\ref{fig:refp}.
+%\begin{figure}[htb!]
+%	\begin{center}
+%		\includegraphics[width=0.7\textwidth]{fig_refprior}
+%  \caption{The curve is the exact calculation of $\pi(\lambda|\omega)$. This is compared with a
+%  numerical calculation of the reference prior (the dots) and Jeffreys' prior  (the triangles) 
+%  for $\lambda = 1/\Lambda^2$.}
+% \label{fig:refp}
+% \end{center}
+%\end{figure}
+%For the likelihood integrated over the nuisance prior, we shall use the new {\tt RooStats} classes
+%{\tt RooAveragePdf} and {\tt RooReferencePrior} to model the integrated likelihood and its
+%associated reference prior.
+%
+%\section{Short Term Work Plan}
+%\begin{enumerate}
+%	\item Check that (apart from the $\sigma_\text{QCD}$ term  Eqs.~(\ref{eq:sigma}) and (\ref{eq:coeffs}) are equivalent to those in Gao's paper. (Note: Gao's $\lambda_i$ are our $\beta_i$.)
+%	\item Write a C++ class that reads the output of Gao's {\tt ciconv} program, which computes the coefficients $a_1, b_1\cdots$ and $a_{11}, b_{11},\cdots$, and computes the cross section in a given $p_T$ bin. The class should be structured as follows
+%	\begin{verbatim}
+%	class CIxsection
+%	{
+%	  public:
+%	     CIxsection(std::string filename);
+%	     ~CIxsection();
+%	     
+%	     void setCoefficients(std::vector<double>& a, std::vector<double>& b,
+%	                          std::vector<double>& aa, std::vector<double>& bb);                   
+%	     double operator()(double lambda, double beta1, ... double beta6);	     
+%	  private:
+%	     std::vector<double> _a;
+%	     std::vector<double> _b;
+%	     std::vector<double> _aa;
+%	     std::vector<double> _bb;
+%	     double mu0;
+%	};
+%	\end{verbatim}
+%	Since the form of the cross section is the same for the unsmeared and smeared spectra, the same class will work for both cases. 
+%	\item Exercise the new code by comparing our calculation with that of Gao's {\tt cixsec} program.
+%	\item Set up Python script to read the coefficients for all $p_T$ bins and place each set of coefficients into a histogram and store all histograms in a {\tt Root} file. For example, there will be one coefficient $a_1$ for each $p_T$ bin. A histogram should be created, perhaps with name $a_1$, with variable bin-widths.  The content of each bin should be set to the value of $a_1$ for that bin. In the end, there will be as many histograms as there are coefficients. Don't forget to store $\mu_0$ also as a histogram. 
+%
+%\end{enumerate}
+
+\begin{thebibliography}{99}
+\bibitem{bib:Gao}
+J. Gao et al., ``Next-to-leading QCD effect to the quark compositeness search at the LHC",
+\emph{Phys. Rev. Lett.} {\bf 106} (2011) 142001, {\tt arXiv:1101.4611}.
+\bibitem{bib:CIJET}
+J. Gao, CIJET, {\tt arXiv:1301.7263}.
+\end{thebibliography}
+\end{document}
