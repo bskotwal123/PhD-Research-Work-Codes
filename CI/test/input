@@ -1,0 +1,7 @@
+Lambda		10000			[composite scale, in GeV]
+gs2LL		-1			[c1/4pi]
+gs2LR		0			[c3/4pi]
+gs2RR		0			[c5/4pi]
+go2LL		0			[c2/4pi]
+go2LR		0			[c4/4pi]
+go2RR		0			[c6/4pi]

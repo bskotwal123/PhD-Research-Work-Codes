@@ -1,0 +1,43 @@
+#ifndef CISPECTRUM_H
+#define CISPECTRUM_H
+// -----------------------------------------------------------------------------
+#include <fstream>
+#include <vector>
+#include <string>
+#include "TDirectory.h"
+#include "TH1D.h"
+
+class CISpectrum
+{
+ public:
+  CISpectrum() {}
+  CISpectrum(std::string histdir, std::string histname);
+  ~CISpectrum() { if ( tdir ) delete tdir; }
+  
+  TH1D* operator()(double lambda, std::vector<double>& kappa);
+
+ private:
+  std::vector<TH1D*> bi;  
+  std::vector<TH1D*> aig;  
+  std::vector<TH1D*> ai; 
+			
+  std::vector<TH1D*> bij; 
+  std::vector<TH1D*> aijg; 
+  std::vector<TH1D*> aij; 
+  
+  std::vector<TH1D*> bi4; 
+  std::vector<TH1D*> ai4g; 
+  std::vector<TH1D*> ai4;
+
+  TDirectory* tdir;
+
+  void get(std::string histdir, 
+	   std::string histname, 
+	   std::string name, 
+	   std::vector<TH1D*>& h);
+
+  TH1D* xsec;
+};
+
+
+#endif
