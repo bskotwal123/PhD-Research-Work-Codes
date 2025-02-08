@@ -1,0 +1,4 @@
+massbin		[inv. mass or pt bin list in GeV]
+49 56
+rapbin		[angular bin list, chi, ystar, ymax or |y|]
+0.0	0.5
