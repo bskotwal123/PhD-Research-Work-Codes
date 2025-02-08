@@ -1,0 +1,46 @@
+
+
+Fiting function parametrization : "[0]+[1]/pow(x,[2])"
+
+========== YBin0 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           1.00330e+00   2.72415e-01   8.15778e-05  -6.71458e-03
+   2  p1           7.73736e+01   2.95052e+03   1.19881e-01  -5.48539e-06
+   3  p2           1.38557e+00   8.50589e+00   3.38652e-04   1.89456e-03
+
+========== YBin1 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           1.00455e+00   2.79433e-01   8.16481e-05  -2.15605e-03
+   2  p1           7.09443e+01   2.74857e+03   1.07556e-01  -4.81827e-06
+   3  p2           1.36495e+00   8.64138e+00   3.35766e-04   1.51000e-03
+
+========== YBin2 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           1.00760e+00   2.91878e-01   8.27877e-05   2.03315e-03
+   2  p1           8.28677e+01   4.09378e+03   1.45213e-01  -2.49063e-07
+   3  p2           1.41890e+00   1.10115e+01   3.74073e-04  -2.38832e-05
+
+========== YBin3 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           1.02275e+00   2.94599e-01   8.82498e-05  -3.19431e-03
+   2  p1           1.31903e+02   8.56778e+03   2.97868e-01  -1.18051e-10
+   3  p2           1.57217e+00   1.45370e+01   4.84460e-04  -4.60282e-06
+
+========== YBin4 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           1.01006e+00   4.24417e-01   9.98281e-05   1.18766e-03
+   2  p1           5.12617e+01   2.70851e+03   9.96339e-02  -3.38501e-06
+   3  p2           1.34343e+00   1.20763e+01   4.18448e-04   5.92797e-04
+
+========== YBin5 =================
+  EXT PARAMETER                                   STEP         FIRST
+  NO.   NAME      VALUE            ERROR          SIZE      DERIVATIVE
+   1  p0           9.75804e-01   8.33819e-01   1.17271e-04  -4.61280e-03
+   2  p1           1.46015e+01   6.64364e+02   2.18101e-02  -2.42183e-05
+   3  p2           1.03409e+00   1.10530e+01   3.24531e-04   1.64984e-03
+
